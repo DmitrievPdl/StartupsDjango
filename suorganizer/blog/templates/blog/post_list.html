@@ -1,0 +1,29 @@
+{% extends parent_template|default:"blog/base_blog.html" %}
+
+{% block title %}
+{{ block.super }} - Blog detail
+{% endblock %}
+
+{% block content %}
+{% for post in post_list %}
+<div class="list-group">
+    <a class="list-group-item list-group-item-action flex-column align-items-start" href="{{ post.get_absolute_url }}">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ post.title|title }}</h5>
+        <small>
+          <time datetime="{{ post.pub_date|date:"Y-m-d" }}">
+            {{ post.pub_date|date:"l, F j, Y" }}
+          </time>
+        </small>
+      </div>
+      <p class="mb-1">
+        {{ post.text|truncatewords:20 }}
+      </p>
+    </a>
+</div>
+{% empty %}
+  <p>
+    <em>No Blog Posts Available</em>
+  </p>
+{% endfor %}
+{% endblock %}
